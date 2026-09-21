@@ -2,6 +2,8 @@ import argparse
 import csv
 import sys
 from pathlib import Path
+#step1
+import logging
 
 
 def check_data(filename):
@@ -16,7 +18,15 @@ def check_data(filename):
         if any(value == "" for value in row):
             missing_rows.append
     return header, data, missing_rows
-    
+
+#step2
+#setting up a logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%H:%M:%S"
+)    
+
 parser = argparse.ArgumentParser (
     description="Check the quality of a CSV file"
 )
@@ -30,23 +40,54 @@ parser.add_argument(
 parser.add_argument(
     "--output", "-o",
     default="data_quality.txt",
-    help="Output report filename"
+    help="Show detailed DEBUG messages"
 )
 
 args = parser.parse_args()
 
+#step3
+
+if args.verbose:
+    logger.setLevel(logging.DEBUG)
+
+#step4
+logger.debug(f"Arguments parsed: filename={args.input}")
+
+#step 5
 p = Path(args.input)
 if not p.is_file():
-    print(f"File not found: '{args.input}'")
-    sys.exit(1)
+    logger.error(f"File not found: '{args.input}'")
+    sys.exit()
 
-print(f"File validated: '{args.input}'")
+logger.ingo(f"File validated: '{args.input}'")
+
+#Step6
+
+'''
+text
+DEBUG Loading data from: students.csv
+'''
 header, data, missing_rows = check_data(args.input)
+
+#Step7
+'''
+INFO loaded 5 rows
+'''
+
 
 with open(args.output, "w") as f:
     f.write(f"Number of rows: {len(data)}\n")
     f.write(f"Number of columns: {len(header)}\n")
     f.write(f"Number of rows with missing values: {len(missing_rows)}\n")
+
+
+
+
+
+
+
+
+
 
 
 # TODO 1: Create an ArgumentParser
