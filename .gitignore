@@ -20,7 +20,11 @@ venv/
 .vscode/
 .idea/
 .env
-```
 
 files/
 data/
+
+
+# Ignore all text files except requirements.txt
+*.txt
+!requirements.txt

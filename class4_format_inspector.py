@@ -18,9 +18,7 @@ logger = logging.getLogger(__name__)
 def inspect_csv(filepath):
     data = pd.read_csv('sample.csv')
     logger.info(f"Inspecting CSV: {filepath.name} ")
-    first_3 = data.head(3)
-    print(first_3)
-
+    print(data.head(3))
 
     """Read a CSV file and display basic information."""
     # TODO:
@@ -33,7 +31,7 @@ def inspect_csv(filepath):
 def inspect_json(filepath):
     with open("sample.json", "r") as f:
         data = json.load(f)
-    logger.jason()
+    logger.info(f"Inspecting JSON: {filepath.name}")
 
 
     """Read a JSON file and display basic information."""
@@ -46,6 +44,7 @@ def inspect_json(filepath):
 def inspect_yaml(filepath):
     with open("sample.yaml", "r") as f:
         config = yaml.safe_load(f)
+    logger.info(f"Inspecting YAMLl: {filepath.name}")
     
 
 
@@ -64,7 +63,8 @@ def inspect_env():
         key for key in ["USERNAME", "PASSWORD"]
         if os.getenv(key) is not None
     ]
-
+    logger.info("Inspecting ENV")
+    print(keys)
     # TODO:
     # 1. Log at INFO that .env was loaded.
     # 2. Print keys.
@@ -80,7 +80,17 @@ def main():
     # 2. Use the / operator to build the CSV, JSON, and YAML paths.
     # 3. Call each inspection function using the matching path.
     # 4. Call inspect_env() without an argument.
-    pass
+    data_dir = Path("data")
+    filepath_csv = data_dir / "sample.csv"
+    filepath_json = data_dir / "sample.json"
+    filepath_yaml = data_dir / "sample.yaml"
+    inspect_csv(filepath_csv)
+    inspect_json(filepath_json)
+    inspect_yaml(filepath_yaml)
+    inspect_env()
+
+
+
 
 
 if __name__ == "__main__":

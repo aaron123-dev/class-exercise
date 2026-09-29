@@ -29,7 +29,6 @@ import os
 # Messy string concatenation
 data_dir = 'data'
 filename = 'sales.csv'
-
 # Only works on Mac/Linux!
 file_path = data_dir + '/' + filename  
 # Only works on Windows
